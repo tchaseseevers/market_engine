@@ -1,0 +1,5 @@
+# Local Python virtual env
+.venv/
+
+# Raw CSV dumps (ignore entire folder)
+csvs/
