@@ -235,14 +235,20 @@ def main() -> None:
     label_col = "direction_next_30s"
     out_cols = ["symbol","bucket_ms"] + feature_cols + [label_col]
     out_df = df[out_cols].copy()
+
+
     out_path_parquet = OUT_DIR_DATA / "features.parquet"
+    out_path_csv = OUT_DIR_DATA / "features.csv"
     try:
         out_df.to_parquet(out_path_parquet, index=False)
+        out_df.to_csv(out_path_csv, index=False)
         wrote = str(out_path_parquet)
+        wrote = str(out_path_csv)
     except Exception:
-        out_path_csv = OUT_DIR_DATA / "features.csv"
         out_df.to_csv(out_path_csv, index=False)
         wrote = str(out_path_csv)
+
+
     def _dtype_str(s: pd.Series) -> str:
         if pd.api.types.is_integer_dtype(s): return "int64"
         if pd.api.types.is_float_dtype(s):   return "float64"
@@ -264,5 +270,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    df = pd.read_parquet("data/features.parquet")  
-    print(df.columns)
+    df = pd.read_csv("data/features.csv")  
+    print(df)

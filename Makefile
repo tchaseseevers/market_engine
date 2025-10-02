@@ -11,6 +11,7 @@ begin:
 	sqlite3 lobx.db ".read sql\3_staging.sql"
 	
 stage_tables: 
+	sqlite3 lobx.db ".read sql\2_schema.sql"
 	sqlite3 lobx.db ".read sql\3_staging.sql"
 	sqlite3 lobx.db ".mode csv" ".import --skip 1 csvs\aggTrade.csv stage_agg_trade"
 	sqlite3 lobx.db ".mode csv" ".import --skip 1 csvs\trade.csv stage_trade"
@@ -27,7 +28,7 @@ staging_to_final:
 	sqlite3 lobx.db ".read sql\5_metrics.sql"
 
 build_features:
-	python .\features_build.py
+	python .\python\features_build.py
 
 train:
 	python .\training.py
